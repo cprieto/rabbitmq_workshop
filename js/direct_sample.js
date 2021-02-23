@@ -3,7 +3,7 @@ const chalk = require('chalk');
 
 const consumer = async (channel, exchange, name, bindTo) => {
   // As with exchange, we need the name not the object
-  const { queue } = await channel.assertQueue(name, {auto_delete: true})
+  const { queue } = await channel.assertQueue(name, {autoDelete: true})
   await Promise.all((bindTo || []).map(async (bind) => {
     // As you see, we bind to the string name
     await channel.bindQueue(queue, exchange, bind)
@@ -20,7 +20,7 @@ const main = async () => {
   const channel = await conn.createChannel()
   
   // here we return an object but the API depends on strings
-  const { exchange } = await channel.assertExchange('sample_direct', 'direct', {auto_delete: true})
+  const { exchange } = await channel.assertExchange('sample_direct', 'direct', {autoDelete: true})
   
   tasks = [
     consumer(channel, exchange, 'q1', ['rk1']),
