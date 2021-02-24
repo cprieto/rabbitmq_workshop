@@ -25,7 +25,7 @@ async def main():
   consumers = [
     asyncio.create_task(consume(channel, exchange, 'q1', 'any', {'language': 'en'})),
     asyncio.create_task(consume(channel, exchange, 'q2', 'all', {'language': 'ge', 'phrase-type': 'greeting'})),
-    asyncio.create_task(consume(channel, exchange, 'q3', 'any', {'phrase-type': 'swearing', 'language': 'es'}))
+    asyncio.create_task(consume(channel, exchange, 'q3', 'any', {'phrase-type': 'swearing', 'language': 'en'}))
   ]
 
   await asyncio.sleep(1)
