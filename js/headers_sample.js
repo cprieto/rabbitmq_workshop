@@ -20,7 +20,7 @@ const main = async () => {
   // here we return an object but the API depends on strings
   const { exchange } = await channel.assertExchange('sample_headers', 'headers', {autoDelete: true})
   
-  tasks = [
+  _ = [
     consumer(channel, exchange, 'q1', 'any', {language: 'en'}),
     consumer(channel, exchange, 'q2', 'all', {language: 'en', 'phrase-type': 'swearing'}),
     consumer(channel, exchange, 'q3', 'any', {language: 'ge', 'phrase-type': 'greeting'}),
@@ -41,8 +41,6 @@ const main = async () => {
 
   console.log(`Publishing a ${chalk.green('swearing')} in ${chalk.yellow('en')} to exchange`)
   channel.publish(exchange, 'ignored', Buffer.from('fuck'), {headers: {language: 'en', 'phrase-type': 'swearing'}})
-
-  await Promise.all(tasks)
 }
 
 // Run everything

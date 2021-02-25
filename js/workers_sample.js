@@ -13,7 +13,7 @@ const main = async () => {
   
   const { queue } = await channel.assertQueue('workers', {autoDelete: true})
 
-  tasks = [
+  _ = [
     consumer(channel, 'w1', queue),
     consumer(channel, 'w2', queue),
     consumer(channel, 'w3', queue),
@@ -27,8 +27,6 @@ const main = async () => {
     console.log(`Publishing ${chalk.green(i)} to exchange`)
     channel.publish('', queue, Buffer.from(i.toString()))
   }
-
-  await Promise.all(tasks)
 }
 
 // Run everything

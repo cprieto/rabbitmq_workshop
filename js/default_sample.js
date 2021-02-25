@@ -14,7 +14,7 @@ const main = async () => {
   const conn = await amqplib.connect('amqp://guest:guest@localhost')
   const channel = await conn.createChannel()
   
-  tasks = [
+  _ = [
     consumer(channel, 'q1'),
     consumer(channel, 'q2'),
   ]
@@ -31,8 +31,6 @@ const main = async () => {
   // Then send a message to q2
   console.log(`Publish '${chalk.yellow('bar')}' to queue ${chalk.blue('q2')}`)
   channel.publish('', 'q2', Buffer.from('bar'))
-
-  await Promise.all(tasks)
 }
 
 // Run everything

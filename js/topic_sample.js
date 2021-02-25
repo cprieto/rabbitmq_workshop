@@ -19,7 +19,7 @@ const main = async () => {
   // here we return an object but the API depends on strings
   const { exchange } = await channel.assertExchange('sample_topic', 'topic', {autoDelete: true})
   
-  tasks = [
+  _ = [
     consumer(channel, exchange, 'q1', 'healthcare.#'),
     consumer(channel, exchange, 'q2', 'healthcare.*.en'),
     consumer(channel, exchange, 'q3', '#.es'),
@@ -35,8 +35,6 @@ const main = async () => {
   // Now it is time for rk2
   console.log(`Publishing to topic ${chalk.blue('healthcare.some.es')}`)
   channel.publish(exchange, 'healthcare.any.es', Buffer.from('hola mundo'))
-
-  await Promise.all(tasks)
 }
 
 // Run everything

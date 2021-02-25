@@ -22,7 +22,7 @@ const main = async () => {
   // here we return an object but the API depends on strings
   const { exchange } = await channel.assertExchange('sample_direct', 'direct', {autoDelete: true})
   
-  tasks = [
+  _ = [
     consumer(channel, exchange, 'q1', ['rk1']),
     consumer(channel, exchange, 'q2', ['rk1', 'rk2']),
     consumer(channel, exchange, 'q3', ['rk2']),
@@ -38,8 +38,6 @@ const main = async () => {
   // Now it is time for rk2
   console.log(`Publish '${chalk.yellow('bar')}' to route ${chalk.blue('rk2')}`)
   channel.publish(exchange, 'rk2', Buffer.from('bar'))
-
-  await Promise.all(tasks)
 }
 
 // Run everything
