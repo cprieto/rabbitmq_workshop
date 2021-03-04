@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # Using RabbitMQ
 
 ---
@@ -124,15 +128,16 @@ So to receive a message, a queue needs to _bind_ to an exchange, **always** [^2]
 
 Do you remember hash tables from algorithms and data structures?
 
-![](images/hash_table.png)
+![50%](images/hash_table.png)
 
 ---
 
 It goes a little beyond that, using a ring of nodes as _buckets_ so it doesn't depend on knowing the number of nodes for calculating the location[^3]
 
-![](images/consistent_hashing.png)
+![inline fill 120%](images/consistent_hashing.png)
 
 [^3]: http://tom-e-white.com/2007/11/consistent-hashing.html
+
 ---
 
 In RabbitMQ
@@ -158,7 +163,7 @@ In RabbitMQ
 
 ---
 
-![](images/exchange_exchange.jpeg)
+![inline fill](images/exchange_exchange.jpeg)
 
 ---
 
@@ -195,4 +200,3 @@ It is possible to emulate synchronous calling using a messaging system!
  - You can wrap your own custom usage of aio-pika in your own library (see `Hase`)
  - Use the language and library that suits you more _for the implementation you require_
  - Simplicity is important
- 
