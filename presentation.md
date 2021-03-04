@@ -75,7 +75,7 @@ So to receive a message, a queue needs to _bind_ to an exchange, **always** [^2]
 
 ---
 
-[](images/direct-exchange.png)
+![](images/direct-exchange.png)
 
 ---
 
@@ -97,7 +97,7 @@ So to receive a message, a queue needs to _bind_ to an exchange, **always** [^2]
 
 ---
 
-[](images/topic-exchange.png)
+![](images/topic-exchange.png)
 
 ---
 
@@ -108,3 +108,91 @@ So to receive a message, a queue needs to _bind_ to an exchange, **always** [^2]
  - Everybody who is bound to it will receive the same message
 
 ---
+
+# Headers Exchange
+
+ - It **does** requires binding
+ - Routing key is ignored at binding
+ - It requires _what headers_ should be bound
+ - `any` is an `OR` operation
+ - `all` is an `AND` operation
+ - Headers starting with `x-` cannot be bound
+
+---
+
+# Consistent hash exchange
+
+Do you remember hash tables from algorithms and data structures?
+
+![](images/hash_table.png)
+
+---
+
+It goes a little beyond that, using a ring of nodes as _buckets_ so it doesn't depend on knowing the number of nodes for calculating the location[^3]
+
+![](images/consistent_hashing.png)
+
+[^3]: http://tom-e-white.com/2007/11/consistent-hashing.html
+---
+
+In RabbitMQ
+
+ - You have to enable the Consistent Hash Exchange plugin, it is not enabled by default
+ - The routing key _in the exchange_ means absolutely nothing (if you are not hashing it)
+ - The routing key _in the binding_ means the **weight** for the association in the hashing circle
+ - Sometimes it will look random (and it is, by definition) but it is _consistent_ in its distribution
+ - You can use the hash of a **header value** or the hash **of the routing key**
+ - This system is usually used to distribute the load between consumers in a _fairer_ way
+
+---
+
+![](images/hash_exchange.jpg)
+
+---
+
+# Exchange to Exchange
+
+ - It works exactly like binding against a queue, but instead, you bind an exchange to another
+ - Super useful to create complex topologies, for example, an original exchange is of type `topic` but you need to consume it using fanout or consistent hash
+ - As with the queue, the routing key in the binding depends on the source exchange type
+
+---
+
+![](images/exchange_exchange.jpeg)
+
+---
+
+# Accepting and rejecting
+
+ - `ack` marks the message as succesfully processed
+ - `reject` marks the message as faulty, something happened while processing it
+ - `nack` is like reject, but returns the message at the _head_ of the queue
+ - In reality, `nack` is `reject` with `requeue` set as True
+ - What if you want to `nack` the message _at the tail_ of the queue?
+
+---
+
+# Prefecting
+
+The Prefetch parameter controls _how many_ messages we will give to each consumer at the same time
+
+ - Higher values favors throughoutput, consumers where the order doesn't matter and needs high throughoutput should set this parameter high
+ - We can prefetch by number of messages of _size_ of messages
+ - Be careful with messages where order is important
+
+---
+
+# RPC (synchronous) messaging
+
+It is possible to emulate synchronous calling using a messaging system!
+
+
+---
+
+# Other libraries and observation
+
+ - In JavaScript many implementors use Rascal instead of naked amqplib
+ - You can wrap your own custom usage of aio-pika in your own library (see `Hase`)
+ - Use the language and library that suits you more _for the implementation you require_
+ - Simplicity is important
+ 
