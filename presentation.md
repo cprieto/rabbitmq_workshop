@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 # Using RabbitMQ
 
 ---
@@ -11,9 +15,9 @@
 
 ---
 
-> You publish to an exchange but consume from a queue[^1]
+> You publish to an exchange but consume from a queue
 
-[^1]: You should know this very well by now
+You should know this very well by now
 
 ---
 
@@ -31,9 +35,9 @@
 
 ---
 
-So to receive a message, a queue needs to _bind_ to an exchange, **always** [^2]
+So to receive a message, a queue needs to _bind_ to an exchange, **always**
 
-[^2]: There is actually an exception, but in reality binding it is done _under the hood_ for us
+There is actually an exception, but in reality binding it is done _under the hood_ for us
 
 ---
 
